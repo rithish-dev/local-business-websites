@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIM Tuition Centre — Sathuvachari, Vellore</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0D1A;
+    --card: #13132A;
+    --border: rgba(255,255,255,0.07);
+    --blue: #4F6EF7;
+    --blue-light: #6B85FF;
+    --gold: #F5C842;
+    --text: #E8E8F0;
+    --muted: #7A7A9A;
+    --white: #FFFFFF;
+    --green: #22c55e;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 60px;
+    background:rgba(13,13,26,0.92); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+  }
+  .logo { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:var(--white); }
+  .logo span { color:var(--blue); }
+  .logo small { display:block; font-size:0.58rem; font-family:'Plus Jakarta Sans',sans-serif; color:var(--muted); font-weight:400; letter-spacing:0.12em; text-transform:uppercase; margin-top:-2px; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--muted); font-size:0.82rem; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--blue-light); }
+  .nav-cta { background:var(--blue); color:white; border:none; padding:10px 24px; border-radius:50px; font-size:0.85rem; font-weight:600; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all 0.2s; }
+  .nav-cta:hover { background:var(--blue-light); transform:translateY(-1px); box-shadow:0 4px 20px rgba(79,110,247,0.4); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:grid; grid-template-columns:1.1fr 0.9fr;
+    align-items:center; padding:120px 60px 80px;
+    position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; right:-100px; top:50%; transform:translateY(-50%);
+    width:600px; height:600px;
+    background:radial-gradient(circle, rgba(79,110,247,0.12) 0%, transparent 65%);
+    border-radius:50%;
+  }
+  .hero::after {
+    content:''; position:absolute; left:-100px; bottom:-100px;
+    width:400px; height:400px;
+    background:radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 65%);
+    border-radius:50%;
+  }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(79,110,247,0.1); border:1px solid rgba(79,110,247,0.25);
+    padding:7px 18px; border-radius:50px;
+    font-size:0.72rem; font-weight:600; color:var(--blue-light);
+    letter-spacing:0.1em; text-transform:uppercase; margin-bottom:24px;
+  }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.8rem,4.5vw,4.2rem);
+    font-weight:700; line-height:1.12; color:var(--white); margin-bottom:14px;
+  }
+  .hero h1 em { font-style:italic; color:var(--blue-light); }
+  .hero h1 .gold { color:var(--gold); font-style:normal; }
+  .hero p { font-size:0.95rem; color:var(--muted); line-height:1.8; max-width:440px; margin-bottom:36px; }
+  .hero-btns { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--blue); color:white; padding:13px 30px; border-radius:50px; text-decoration:none; font-size:0.88rem; font-weight:600; transition:all 0.2s; box-shadow:0 4px 20px rgba(79,110,247,0.35); }
+  .btn-primary:hover { background:var(--blue-light); transform:translateY(-2px); box-shadow:0 8px 28px rgba(79,110,247,0.45); }
+  .btn-secondary { color:var(--text); font-size:0.88rem; font-weight:500; text-decoration:none; display:flex; align-items:center; gap:8px; transition:all 0.2s; border:1px solid var(--border); padding:13px 24px; border-radius:50px; }
+  .btn-secondary:hover { border-color:rgba(79,110,247,0.4); color:var(--blue-light); gap:12px; }
+  .rating-pill { display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:10px 18px; border-radius:50px; margin-top:24px; font-size:0.82rem; color:var(--text); }
+  .stars { color:var(--gold); letter-spacing:1px; }
+
+  /* HERO CARD */
+  .hero-right { display:flex; justify-content:center; position:relative; z-index:1; }
+  .hero-card { background:var(--card); border:1px solid var(--border); border-radius:28px; padding:32px; max-width:340px; width:100%; position:relative; overflow:hidden; }
+  .hero-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--blue),var(--gold)); }
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:22px; }
+  .stat { text-align:center; padding:16px 10px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:16px; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--white); line-height:1; }
+  .stat-num span { color:var(--blue-light); }
+  .stat-label { font-size:0.68rem; color:var(--muted); margin-top:4px; line-height:1.3; }
+  .divider { height:1px; background:var(--border); margin:4px 0 20px; }
+  .feature-list { display:flex; flex-direction:column; gap:10px; }
+  .feature-item { display:flex; align-items:center; gap:12px; font-size:0.83rem; color:var(--muted); }
+  .feature-item span { color:var(--green); font-size:0.9rem; }
+  .avail-badge { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:20px; background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:12px; padding:12px; font-size:0.82rem; color:var(--green); font-weight:600; }
+  .avail-dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* TICKER */
+  .ticker { background:linear-gradient(90deg,var(--blue),#3a56d4); padding:13px 0; overflow:hidden; }
+  .ticker-inner { display:flex; gap:50px; animation:ticker 20s linear infinite; white-space:nowrap; }
+  .ticker-item { display:flex; align-items:center; gap:10px; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.75); font-weight:500; }
+  .ticker-item span { color:var(--gold); }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* REVIEWS */
+  .reviews-strip { background:var(--card); padding:60px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .reviews-header { text-align:center; margin-bottom:36px; }
+  .reviews-header h2 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--white); margin-bottom:8px; }
+  .reviews-header p { color:var(--muted); font-size:0.85rem; }
+  .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .review-card { padding:24px; background:var(--bg); border:1px solid var(--border); border-radius:18px; transition:border-color 0.2s; }
+  .review-card:hover { border-color:rgba(79,110,247,0.3); }
+  .review-stars { color:var(--gold); font-size:0.85rem; margin-bottom:12px; }
+  .review-text { font-size:0.84rem; color:var(--muted); line-height:1.7; font-style:italic; margin-bottom:14px; }
+  .review-author { font-size:0.76rem; color:var(--blue-light); font-weight:600; }
+
+  /* COURSES */
+  #courses { padding:90px 60px; }
+  .section-label { font-size:0.7rem; font-weight:600; color:var(--blue-light); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:700; color:var(--white); line-height:1.2; margin-bottom:14px; }
+  .section-sub { color:var(--muted); font-size:0.92rem; line-height:1.75; max-width:480px; }
+  .courses-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:50px; }
+  .course-card { padding:30px 26px; background:var(--card); border:1px solid var(--border); border-radius:20px; transition:all 0.3s; position:relative; overflow:hidden; cursor:default; }
+  .course-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--blue),var(--gold)); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .course-card:hover { border-color:rgba(79,110,247,0.3); transform:translateY(-4px); box-shadow:0 12px 40px rgba(79,110,247,0.12); }
+  .course-card:hover::before { transform:scaleX(1); }
+  .course-icon { font-size:1.8rem; margin-bottom:16px; }
+  .course-grade { font-size:0.68rem; font-weight:600; color:var(--blue-light); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px; }
+  .course-name { font-weight:600; font-size:0.95rem; color:var(--white); margin-bottom:8px; }
+  .course-desc { font-size:0.82rem; color:var(--muted); line-height:1.65; }
+
+  /* WHY US */
+  #why { padding:90px 60px; background:var(--card); border-top:1px solid var(--border); }
+  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .why-left h2 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.6rem); font-weight:700; color:var(--white); line-height:1.2; margin-bottom:16px; }
+  .why-left p { color:var(--muted); font-size:0.92rem; line-height:1.75; margin-bottom:28px; }
+  .why-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .why-stat { padding:20px; background:var(--bg); border:1px solid var(--border); border-radius:16px; }
+  .why-stat-num { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--blue-light); }
+  .why-stat-label { font-size:0.78rem; color:var(--muted); margin-top:4px; }
+  .why-features { display:flex; flex-direction:column; gap:16px; }
+  .why-feature { display:flex; gap:16px; align-items:flex-start; padding:20px; background:var(--bg); border:1px solid var(--border); border-radius:16px; transition:border-color 0.2s; }
+  .why-feature:hover { border-color:rgba(79,110,247,0.3); }
+  .why-ico { font-size:1.4rem; flex-shrink:0; }
+  .why-feature-title { font-weight:600; font-size:0.9rem; color:var(--white); margin-bottom:4px; }
+  .why-feature-desc { font-size:0.8rem; color:var(--muted); line-height:1.6; }
+
+  /* CONTACT */
+  #contact { padding:90px 60px; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:50px; margin-top:50px; align-items:start; }
+  .timing-list { display:flex; flex-direction:column; gap:12px; }
+  .timing-row { display:flex; justify-content:space-between; align-items:center; padding:15px 22px; border-radius:12px; background:var(--card); border:1px solid var(--border); transition:border-color 0.2s; }
+  .timing-row:hover { border-color:rgba(79,110,247,0.3); }
+  .timing-day { font-size:0.87rem; color:var(--text); }
+  .timing-time { font-size:0.82rem; color:var(--blue-light); font-weight:500; }
+  .contact-box { background:var(--card); border:1px solid var(--border); border-radius:22px; padding:34px; }
+  .contact-box h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:24px; color:var(--white); }
+  .contact-item { display:flex; gap:14px; margin-bottom:20px; align-items:flex-start; }
+  .contact-ico { font-size:1.1rem; margin-top:1px; }
+  .contact-text { font-size:0.85rem; color:var(--muted); line-height:1.6; }
+  .contact-text strong { color:var(--white); display:block; margin-bottom:2px; }
+  .enroll-btn { width:100%; padding:14px; background:var(--blue); color:white; border:none; border-radius:12px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all 0.2s; box-shadow:0 4px 16px rgba(79,110,247,0.3); }
+  .enroll-btn:hover { background:var(--blue-light); transform:translateY(-1px); }
+
+  /* FOOTER */
+  footer { background:#080812; color:var(--muted); padding:28px 60px; display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; border-top:1px solid var(--border); }
+  footer .logo { color:var(--white); font-size:1.1rem; }
+
+  /* CHATBOT */
+  .chat-toggle { position:fixed; bottom:28px; right:28px; width:58px; height:58px; background:var(--blue); color:white; border:none; border-radius:50%; font-size:1.4rem; cursor:pointer; box-shadow:0 4px 20px rgba(79,110,247,0.5); transition:all 0.3s; z-index:999; display:flex; align-items:center; justify-content:center; }
+  .chat-toggle:hover { transform:scale(1.1); }
+  .chat-toggle.open { background:#1a1a3a; }
+  .chatbox { position:fixed; bottom:100px; right:28px; width:350px; background:var(--card); border:1px solid var(--border); border-radius:24px; box-shadow:0 20px 60px rgba(0,0,0,0.5); z-index:998; overflow:hidden; display:none; flex-direction:column; max-height:510px; animation:slideUp 0.3s ease; }
+  .chatbox.visible { display:flex; }
+  @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .chat-header { background:linear-gradient(135deg,var(--blue),var(--blue-light)); padding:18px 22px; display:flex; align-items:center; gap:13px; }
+  .chat-avatar { width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+  .chat-name { color:white; font-weight:600; font-size:0.92rem; }
+  .chat-status { color:rgba(255,255,255,0.65); font-size:0.72rem; margin-top:1px; }
+  .chat-status::before { content:'●'; color:#4ade80; font-size:0.45rem; margin-right:4px; vertical-align:middle; }
+  .chat-messages { flex:1; overflow-y:auto; padding:18px; display:flex; flex-direction:column; gap:12px; background:var(--bg); }
+  .msg { max-width:82%; padding:11px 15px; border-radius:18px; font-size:0.84rem; line-height:1.55; animation:fadeIn 0.2s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1} }
+  .msg.bot { background:var(--card); color:var(--text); border-radius:4px 18px 18px 18px; align-self:flex-start; border:1px solid var(--border); }
+  .msg.user { background:var(--blue); color:white; border-radius:18px 18px 4px 18px; align-self:flex-end; }
+  .quick-replies { display:flex; flex-wrap:wrap; gap:7px; padding:0 16px 12px; background:var(--bg); }
+  .qr-btn { background:transparent; border:1px solid rgba(79,110,247,0.35); color:var(--blue-light); font-size:0.75rem; padding:6px 13px; border-radius:20px; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all 0.2s; }
+  .qr-btn:hover { background:var(--blue); color:white; border-color:var(--blue); }
+  .chat-input-area { padding:14px 16px; display:flex; gap:9px; border-top:1px solid var(--border); background:var(--card); }
+  .chat-input { flex:1; border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:24px; padding:9px 15px; font-size:0.84rem; outline:none; font-family:'Plus Jakarta Sans',sans-serif; transition:border-color 0.2s; }
+  .chat-input:focus { border-color:var(--blue); }
+  .chat-input::placeholder { color:var(--muted); }
+  .send-btn { width:38px; height:38px; background:var(--blue); color:white; border:none; border-radius:50%; cursor:pointer; font-size:0.95rem; transition:all 0.2s; display:flex; align-items:center; justify-content:center; }
+  .send-btn:hover { background:var(--blue-light); }
+  .typing { display:flex; gap:4px; padding:12px 15px; align-items:center; }
+  .typing span { width:6px; height:6px; border-radius:50%; background:var(--muted); animation:bounce 1.2s infinite; }
+  .typing span:nth-child(2){animation-delay:0.2s} .typing span:nth-child(3){animation-delay:0.4s}
+  @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+  @media(max-width:900px){
+    nav{padding:14px 20px;} .nav-links{display:none;}
+    .hero{grid-template-columns:1fr;padding:100px 20px 60px;} .hero-right{display:none;}
+    .reviews-strip{padding:40px 20px;} .reviews-grid{grid-template-columns:1fr;}
+    #courses,#why,#contact{padding:60px 20px;}
+    .courses-grid{grid-template-columns:1fr;} .why-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;} footer{padding:20px;flex-direction:column;gap:6px;text-align:center;}
+    .chatbox{width:calc(100vw - 36px);right:18px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span>AIM</span> Tuition Centre<small>Sathuvachari, Vellore</small></div>
+  <ul class="nav-links">
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#why">Why AIM</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enroll Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">⭐ 5.0 Rating · 159 Reviews · Vellore's Finest</div>
+    <h1>Where students find their <em>aim</em> and <span class="gold">achieve it</span></h1>
+    <p>AIM Tuition Centre in Sathuvachari, Vellore — trusted by hundreds of families for personalized attention, talented teachers, and a proven track record of academic excellence.</p>
+    <div class="hero-btns">
+      <a href="tel:09940345256" class="btn-primary">📞 Call to Enroll</a>
+      <a href="#courses" class="btn-secondary">See Courses →</a>
+    </div>
+    <div class="rating-pill">
+      <span class="stars">★★★★★</span>
+      <strong>5.0</strong> · 159 Google Reviews · <span style="color:var(--blue-light);font-weight:600">3+ Years · Vellore</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-num">5.0<span>★</span></div><div class="stat-label">Google Rating</div></div>
+        <div class="stat"><div class="stat-num">159<span>+</span></div><div class="stat-label">Happy Reviews</div></div>
+        <div class="stat"><div class="stat-num">3<span>+</span></div><div class="stat-label">Years Running</div></div>
+        <div class="stat"><div class="stat-num">100<span>%</span></div><div class="stat-label">Dedicated Care</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="feature-list">
+        <div class="feature-item"><span>✓</span> CBSE & ICSE curriculum covered</div>
+        <div class="feature-item"><span>✓</span> Online & offline classes</div>
+        <div class="feature-item"><span>✓</span> Personalized attention</div>
+        <div class="feature-item"><span>✓</span> Friendly, talented teachers</div>
+      </div>
+      <div class="avail-badge"><div class="avail-dot"></div>Open Today · Opens 6 AM</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">📚 <span>CBSE Tuition</span></span>
+    <span class="ticker-item">📝 <span>ICSE Tuition</span></span>
+    <span class="ticker-item">🧮 <span>Mathematics</span></span>
+    <span class="ticker-item">🔬 <span>Science</span></span>
+    <span class="ticker-item">💻 <span>Online Classes</span></span>
+    <span class="ticker-item">🏆 <span>Exam Preparation</span></span>
+    <span class="ticker-item">📚 <span>CBSE Tuition</span></span>
+    <span class="ticker-item">📝 <span>ICSE Tuition</span></span>
+    <span class="ticker-item">🧮 <span>Mathematics</span></span>
+    <span class="ticker-item">🔬 <span>Science</span></span>
+    <span class="ticker-item">💻 <span>Online Classes</span></span>
+    <span class="ticker-item">🏆 <span>Exam Preparation</span></span>
+  </div>
+</div>
+
+<section class="reviews-strip" id="reviews">
+  <div class="reviews-header">
+    <h2>What parents & students say</h2>
+    <p>Real reviews from real families in Vellore — 5.0 stars across 159 reviews</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Nice ambience with talented staffs and well maintained space. My child looks forward to coming here every day."</div>
+      <div class="review-author">— Google Review, Vellore</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Friendly teachers and good teaching. Suitable for studying environment. Highly recommend for all students."</div>
+      <div class="review-author">— Google Review, Sathuvachari</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"The personalized attention and support make it a great place for learning. My son's marks improved drastically."</div>
+      <div class="review-author">— Google Review, Vellore</div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="section-label">What we teach</div>
+  <div class="section-title">Courses for every<br>grade & board</div>
+  <p class="section-sub">Comprehensive tuition for all subjects across CBSE and ICSE — taught by experienced, passionate educators.</p>
+  <div class="courses-grid">
+    <div class="course-card">
+      <div class="course-icon">🧮</div>
+      <div class="course-grade">All Grades</div>
+      <div class="course-name">Mathematics</div>
+      <div class="course-desc">From basics to advanced — making maths easy and enjoyable for every student.</div>
+    </div>
+    <div class="course-card">
+      <div class="course-icon">🔬</div>
+      <div class="course-grade">Grade 6–12</div>
+      <div class="course-name">Science (Physics, Chemistry, Biology)</div>
+      <div class="course-desc">Conceptual clarity with practical understanding. Strong foundation for board exams.</div>
+    </div>
+    <div class="course-card">
+      <div class="course-icon">📖</div>
+      <div class="course-grade">All Grades</div>
+      <div class="course-name">English & Languages</div>
+      <div class="course-desc">Grammar, comprehension and writing skills — building confident communicators.</div>
+    </div>
+    <div class="course-card">
+      <div class="course-icon">🏆</div>
+      <div class="course-grade">Grade 10 & 12</div>
+      <div class="course-name">Board Exam Preparation</div>
+      <div class="course-desc">Focused revision, past papers, and exam strategies for top scores.</div>
+    </div>
+    <div class="course-card">
+      <div class="course-icon">💻</div>
+      <div class="course-grade">Flexible</div>
+      <div class="course-name">Online Classes</div>
+      <div class="course-desc">Live interactive sessions from home — same quality, maximum convenience.</div>
+    </div>
+    <div class="course-card">
+      <div class="course-icon">📝</div>
+      <div class="course-grade">All Boards</div>
+      <div class="course-name">Social Science & Others</div>
+      <div class="course-desc">History, Geography, Civics and more — comprehensive coverage of all subjects.</div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="why-grid">
+    <div class="why-left">
+      <div class="section-label">Why choose us</div>
+      <h2>Not just tuition —<br>a learning family</h2>
+      <p>At AIM Tuition Centre, every student gets the attention they deserve. We don't just teach — we mentor, motivate, and make sure no student is left behind.</p>
+      <div class="why-stats">
+        <div class="why-stat"><div class="why-stat-num">5.0★</div><div class="why-stat-label">Perfect Google rating</div></div>
+        <div class="why-stat"><div class="why-stat-num">159+</div><div class="why-stat-label">Satisfied families</div></div>
+        <div class="why-stat"><div class="why-stat-num">3+</div><div class="why-stat-label">Years of excellence</div></div>
+        <div class="why-stat"><div class="why-stat-num">100%</div><div class="why-stat-label">Personal attention</div></div>
+      </div>
+    </div>
+    <div class="why-features">
+      <div class="why-feature"><div class="why-ico">👨‍🏫</div><div><div class="why-feature-title">Talented, caring teachers</div><div class="why-feature-desc">Experienced educators who know how to connect with students and make learning fun.</div></div></div>
+      <div class="why-feature"><div class="why-ico">🎯</div><div><div class="why-feature-title">Personalized attention</div><div class="why-feature-desc">Small batches ensure every student gets individual focus — no one gets left behind.</div></div></div>
+      <div class="why-feature"><div class="why-ico">🏠</div><div><div class="why-feature-title">Great environment</div><div class="why-feature-desc">Well-maintained, comfortable space designed for focused, distraction-free studying.</div></div></div>
+      <div class="why-feature"><div class="why-ico">📱</div><div><div class="why-feature-title">Online & offline both</div><div class="why-feature-desc">Flexible learning — attend from centre or join live online sessions from home.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label">Find Us</div>
+  <div class="section-title">Class timings &<br>how to reach us</div>
+  <p class="section-sub">Walk in or call us to know about batches and enrollment. We're always happy to help.</p>
+  <div class="contact-grid">
+    <div class="timing-list">
+      <div class="timing-row"><span class="timing-day">Monday – Saturday</span><span class="timing-time">6:00 AM – 6:30 PM</span></div>
+      <div class="timing-row"><span class="timing-day">Early Morning Batch</span><span class="timing-time">Starts 6:00 AM</span></div>
+      <div class="timing-row"><span class="timing-day">Evening Batch</span><span class="timing-time">Till 6:30 PM</span></div>
+      <div class="timing-row"><span class="timing-day">Online Classes</span><span class="timing-time">Flexible Timings</span></div>
+      <div class="timing-row"><span class="timing-day">Sunday</span><span class="timing-time">Call to confirm</span></div>
+    </div>
+    <div class="contact-box">
+      <h3>Get in touch</h3>
+      <div class="contact-item"><div class="contact-ico">📍</div><div class="contact-text"><strong>Address</strong>No. 11/654, First Floor, Bhagath Singh Street, Near PF Office, Phase III, Sathuvachari, Vellore – 632009</div></div>
+      <div class="contact-item"><div class="contact-ico">📞</div><div class="contact-text"><strong>Phone</strong>099403 45256</div></div>
+      <div class="contact-item"><div class="contact-ico">🎓</div><div class="contact-text"><strong>Boards Covered</strong>CBSE & ICSE — All grades</div></div>
+      <div class="contact-item"><div class="contact-ico">⭐</div><div class="contact-text"><strong>Rating</strong>5.0 stars · 159 Google Reviews · 3+ years in business</div></div>
+      <button class="enroll-btn" onclick="window.location.href='tel:09940345256'">📞 Call Now to Enroll</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo"><span style="color:var(--blue)">AIM</span> Tuition Centre</div>
+  <div>© 2025 AIM Tuition Centre, Sathuvachari, Vellore. All rights reserved.</div>
+  <div>5.0★ · Vellore's Most Trusted Tuition</div>
+</footer>
+
+<button class="chat-toggle" id="chatToggle" onclick="toggleChat()">💬</button>
+<div class="chatbox" id="chatbox">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div><div class="chat-name">AIM Tuition Assistant</div><div class="chat-status">Online now</div></div>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">👋 Hi! Welcome to AIM Tuition Centre. Ask me about courses, timings, fees or enrollment!</div>
+  </div>
+  <div class="quick-replies" id="quickReplies">
+    <button class="qr-btn" onclick="quickReply('What are the timings?')">🕐 Timings</button>
+    <button class="qr-btn" onclick="quickReply('How to enroll?')">📝 Enroll</button>
+    <button class="qr-btn" onclick="quickReply('What are the fees?')">💰 Fees</button>
+    <button class="qr-btn" onclick="quickReply('Which courses do you offer?')">📚 Courses</button>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button class="send-btn" onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<script>
+const responses = {
+  timings:{keywords:['timing','time','open','hours','when','batch'],reply:`⏰ <b>AIM Tuition Centre Timings:</b><br><br>Mon–Sat: <b>6:00 AM – 6:30 PM</b><br>Early morning & evening batches available<br>Online classes: Flexible timings<br><br>📞 Call <b>099403 45256</b> for batch availability.`},
+  enroll:{keywords:['enroll','join','admission','register','how to'],reply:`📝 <b>How to Enroll:</b><br><br>Simply call or walk in!<br>📞 <b>099403 45256</b><br>📍 Bhagath Singh Street, Sathuvachari<br><br>Mention your child's grade and board — we'll suggest the right batch!`},
+  fees:{keywords:['fee','fees','cost','price','charge','how much'],reply:`💰 <b>Fees:</b><br><br>Very affordable fees based on grade and subject. Please call <b>099403 45256</b> for current fee details.<br><br>Known for excellent quality at fair prices!`},
+  courses:{keywords:['course','subject','class','cbse','icse','maths','science','english'],reply:`📚 <b>Courses at AIM:</b><br><br>✅ Mathematics (All grades)<br>✅ Science – Physics, Chemistry, Biology<br>✅ English & Languages<br>✅ Social Science<br>✅ Board Exam Prep (10th & 12th)<br>✅ Online Classes available<br><br>Both CBSE & ICSE covered!`},
+  location:{keywords:['location','address','where','directions','how to reach'],reply:`📍 <b>Find Us:</b><br><br>No. 11/654, First Floor,<br>Bhagath Singh Street,<br>Near PF Office, Phase III,<br>Sathuvachari, Vellore – 632009<br><br>📞 <b>099403 45256</b>`},
+  online:{keywords:['online','virtual','home','zoom','remote'],reply:`💻 <b>Online Classes:</b><br><br>Yes! AIM offers live online classes with flexible timings — same quality teaching from the comfort of home.<br><br>Call <b>099403 45256</b> to know more about online batches.`},
+  greeting:{keywords:['hi','hello','hey','hii','vanakkam','namaste'],reply:`👋 Hello! Welcome to AIM Tuition Centre — Vellore's top-rated tuition with a perfect 5.0★ rating!<br><br>How can I help you today?`}
+};
+function getBotReply(msg){const lower=msg.toLowerCase();for(const key in responses){if(responses[key].keywords.some(k=>lower.includes(k)))return responses[key].reply;}return`Thanks for your question! Please contact us directly:<br><br>📞 <b>099403 45256</b><br>📍 Bhagath Singh Street, Sathuvachari, Vellore<br><br>We're happy to help!`;}
+function addMsg(text,type){const msgs=document.getElementById('chatMessages');const div=document.createElement('div');div.className=`msg ${type}`;div.innerHTML=text;msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;}
+function showTyping(){const msgs=document.getElementById('chatMessages');const div=document.createElement('div');div.className='msg bot typing';div.id='typing';div.innerHTML='<span></span><span></span><span></span>';msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;}
+function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+function sendMessage(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;addMsg(text,'user');input.value='';document.getElementById('quickReplies').style.display='none';showTyping();setTimeout(()=>{removeTyping();addMsg(getBotReply(text),'bot');},800+Math.random()*400);}
+function quickReply(text){addMsg(text,'user');document.getElementById('quickReplies').style.display='none';showTyping();setTimeout(()=>{removeTyping();addMsg(getBotReply(text),'bot');},800);}
+function toggleChat(){const box=document.getElementById('chatbox');const btn=document.getElementById('chatToggle');box.classList.toggle('visible');btn.classList.toggle('open');btn.textContent=box.classList.contains('visible')?'✕':'💬';}
+</script>
+</body>
+</html>
